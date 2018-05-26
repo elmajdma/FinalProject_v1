@@ -1,8 +1,10 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,15 +13,18 @@ import elmajdma.joketeller.Joke;
 import elmajdma.showjoke.JokeShowActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements JokeDelivery{
  private  static final String JOKE_KEY="joke_key";
-    private Joke joke=new Joke();
+    //private Joke joke=new Joke();
+  String jokeToRead;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
     }
 
 
@@ -46,12 +51,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-      Intent jokeIntent = new Intent(this, JokeShowActivity.class);
-      jokeIntent.putExtra(JOKE_KEY,joke.getJoke());
-      startActivity(jokeIntent);
+     //new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
 
-        Toast.makeText(this,joke.getJoke() , Toast.LENGTH_SHORT).show();
+      Intent jokeIntent = new Intent(this, JokeShowActivity.class);
+      //jokeIntent.putExtra(JOKE_KEY,joke.getJoke());
+      jokeIntent.putExtra(JOKE_KEY,jokeToRead);
+      startActivity(jokeIntent);
+        //Toast.makeText(this,joke.getJoke() , Toast.LENGTH_SHORT).show();
+
+
     }
 
 
+
+
+  @Override
+  public void getJoke(String joke) {
+      jokeToRead=joke;
+
+  }
 }
