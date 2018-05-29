@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements JokeDelivery{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      new EndpointsAsyncTask().execute();
+      new EndpointsAsyncTask(this).execute();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,11 +40,13 @@ public class MainActivity extends AppCompatActivity implements JokeDelivery{
     public void tellJoke(View view) {
       Intent jokeIntent = new Intent(this, JokeShowActivity.class);
       jokeIntent.putExtra(JOKE_KEY,jokeToRead);
+      Toast.makeText(this, jokeToRead, Toast.LENGTH_LONG).show();
       startActivity(jokeIntent);
     }
 
   @Override
   public void getJoke(String joke) {
+
       jokeToRead=joke;
 
   }
