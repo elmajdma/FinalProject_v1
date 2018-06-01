@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Pair;
 import android.widget.Toast;
@@ -9,18 +10,23 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
+import elmajdma.showjoke.JokeShowActivity;
 import java.io.IOException;
 
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+  private  static final String JOKE_KEY="joke_key";
   private JokeDelivery jokeDelivery;
   private static MyApi myApiService = null;
+  private Context context;
 
-  public EndpointsAsyncTask() {
+  public EndpointsAsyncTask(Context context) {
+    this.context = context.getApplicationContext();
   }
 
-  public EndpointsAsyncTask(JokeDelivery jokeDelivery) {
+ /* public EndpointsAsyncTask(JokeDelivery jokeDelivery) {
   this.jokeDelivery=jokeDelivery;
-  }
+
+  }*/
 
   @Override
   protected String doInBackground(Void... params) {
@@ -64,7 +70,8 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
   @Override
   protected void onPostExecute(String result) {
     //Toast.makeText(, result, Toast.LENGTH_LONG).show();
-    jokeDelivery.getJoke(result);
+   // jokeDelivery.getJoke(result);
+    context.startActivity(new Intent(context, JokeShowActivity.class).putExtra(JOKE_KEY,result));
 
 
   }

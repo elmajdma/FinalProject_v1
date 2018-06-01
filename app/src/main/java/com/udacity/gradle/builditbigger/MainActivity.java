@@ -13,15 +13,12 @@ import elmajdma.joketeller.Joke;
 import elmajdma.showjoke.JokeShowActivity;
 
 
-public class MainActivity extends AppCompatActivity implements JokeDelivery{
- private  static final String JOKE_KEY="joke_key";
- private JokeDelivery jokeDelivery;
-  String jokeToRead;
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      new EndpointsAsyncTask(this).execute();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,16 +35,10 @@ public class MainActivity extends AppCompatActivity implements JokeDelivery{
         return super.onOptionsItemSelected(item);
     }
     public void tellJoke(View view) {
-      Intent jokeIntent = new Intent(this, JokeShowActivity.class);
+      new EndpointsAsyncTask(this).execute();
+      /*Intent jokeIntent = new Intent(this, JokeShowActivity.class);
       jokeIntent.putExtra(JOKE_KEY,jokeToRead);
       Toast.makeText(this, jokeToRead, Toast.LENGTH_LONG).show();
-      startActivity(jokeIntent);
+      startActivity(jokeIntent);*/
     }
-
-  @Override
-  public void getJoke(String joke) {
-
-      jokeToRead=joke;
-
-  }
 }

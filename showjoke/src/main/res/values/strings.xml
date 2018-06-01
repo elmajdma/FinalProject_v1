@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">ShowJoke</string>
+  <string name="JokeError">An Error happen while get Joke</string>
 </resources>
